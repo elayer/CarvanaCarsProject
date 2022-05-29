@@ -1,4 +1,4 @@
-## Elden Ring Carvana Cars Regression Project - Overview:
+## Carvana Cars Regression Project - Overview:
 
 * Scraped roughly two thousand pages of car data from Carvana's used car listings. 
 
