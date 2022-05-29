@@ -2,52 +2,56 @@
 
 * Scraped roughly two thousand pages of car data from Carvana's used car listings. 
 
-* Tokenized the review text to conduct N-Gram analysis, create word clouds, and construct data to be fed into NLP models (namely Sentiment Analysis).
+* Cleaned and processed the data for preparation for EDA and model building tasks. Tasks ranged from imputing missing values to feature engineering new versions of variables which had high cardinality. I also performed some outlier detections techniques using PyCaret as well as Z-score.
 
-* To perform Sentiment Classification, I began model building by using Naive Bayes, SGD Classifier and Logistic Regression. Following this, I built a deep learning PyTorch model utilizing HuggingFace transformers. Here, I used the RoBERTa model.
-
-* Lastly, to analyze the topics of discussion among the apps to track down potential areas of game improvement and reception of the game itself, I performed 
-LDA (Latent Dirichlet Analysis) and LSA (Latent Semantic Analysis) to extract topic information and key distinguishing words in the text corpus.
+* Within Model Building, I began by dropping insignificant attributes as well as variables exhibiting multicollinearity. After using the OLS method from statsmodels, I moved into applying linear regression techniques such as standard Linear Regression, Elastic Net, and Kernel Ridge. I followed this up by applying more powerful models such as Random Forest, LightGBM, and XGBoost regression.
 
 
 ## Code and Resources Used:
 
 **Python Version:** 3.8.5
 
-**Packages:** numpy, pandas, requests, beautiful soup, matplotlib, seaborn, sklearn, huggingface transformers, pytorch, nltk, gensim, spacy, re
-
-**Web Framework Requirements Command:** ```pip install -r requirements.txt```
+**Packages:** numpy, pandas, requests, beautiful soup, matplotlib, seaborn, sklearn, optuna, plotly, scipy,
+lightgbm, xgboost, pycaret
 
 ## References:
 
 * Various project structure and process elements were learned from Ken Jee's YouTube series: 
 https://www.youtube.com/watch?v=MpF9HENQjDo&list=PL2zq7klxX5ASFejJj80ob9ZAnBHdz5O1t
 
-* Helpful information on how to scrap Steam reviews:
-https://andrew-muller.medium.com/scraping-steam-user-reviews-9a43f9e38c92
+* Helpful guide on creating geographical maps using plotly:
+https://towardsdatascience.com/geographical-plotting-of-maps-with-plotly-4b5a5c95f02a
 
-* Elaborate and effective PyTorch structure and architecture nuances I learned in this Kaggle notebook from a competition I participated in to learn:
-https://www.kaggle.com/code/yasufuminakama/nbme-deberta-base-baseline-train
-
-* LSA in Python implementation guide: 
-https://towardsdatascience.com/latent-semantic-analysis-sentiment-classification-with-python-5f657346f6a3
-
-* LDA in Python implementation guide: 
-https://towardsdatascience.com/topic-modelling-in-python-with-spacy-and-gensim-dc8f7748bdbf
-
+* Learning resources to read behind the logic of Kernel Ridge regression:
+https://www.sciencedirect.com/topics/computer-science/kernel-ridge-regression
+https://towardsdatascience.com/svm-kernels-what-do-they-actually-do-56ce36f4f7b8
 
 ## Web Scraping:
 
-Created a web scraper using Requests and Beauitful Soup. Using the Steam scraper, I obtained the following information from each record of reviews (relevant to project):
-*   Language
-*   Review
-*   Voted Up (Recommended)
-*   Votes Up
-*   Votes Funny
-*   Weighted Vote Score (helpfulness)
-*   Comment Count
-*   Steam Purchase
-*   Received for Free
+Created a web scraper using Requests and Beauitful Soup. Using two separate scrapers to first scrape the individual vehicle links and then scrape those links for vehicle information, here is the information collected from the scrapers:
+
+*   Make
+*   Year
+*   Mileage
+*   State
+*   MPG-City, MPG-Highway
+*   Engine Cylinder Count
+*   Fuel
+*   Exterior Color, Interior Color
+*   Number of Keys
+*   Doors
+*   Seating
+*   Ac
+*   Powered Windows
+*   CD Player
+*   Powered Locks
+*   Tilted Wheel
+*   Powered Seats
+*   Facets (individual car special features)
+*   Imperfections (number of bad points of a car such as damage)
+*   Engine Description
+*   Transmission
+*   Price
 
 ## Data Cleaning
 
