@@ -120,7 +120,7 @@ The statsmodels OLS and standard Linear Regression models achieved similar perfo
 
 * LightGBM Regression) R2: 92.19, RMSE: 0.0887
 
-* XGBoost Regression) R2: 93.44, 0.0812
+* XGBoost Regression) R2: 93.44, RMSE: 0.0812
 
 I attempted to use Optuna to optimize the hyperparameters of Kernel Ridge and XGBoost. However, I didn't obtained any better models than the ones with hyperparameter sets I established manually. Attempts to use GridSearchCV did not converge.
 
