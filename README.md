@@ -31,9 +31,13 @@ https://towardsdatascience.com/svm-kernels-what-do-they-actually-do-56ce36f4f7b8
 Created a web scraper using Requests and Beauitful Soup. Using two separate scrapers to first scrape the individual vehicle links and then scrape those links for vehicle information, here is the information collected from the scrapers:
 
 *   Make
+*   Model
+*   Trim
 *   Year
 *   Mileage
+*   City
 *   State
+*   Curb Weight
 *   MPG-City, MPG-Highway
 *   Engine Cylinder Count
 *   Fuel
@@ -55,55 +59,72 @@ Created a web scraper using Requests and Beauitful Soup. Using two separate scra
 
 ## Data Cleaning
 
-After collecting data, I performed several necessary text cleaning steps in order to analyze the corpus and perform EDA. I went through the following steps to clean and prepare the data:
+After collecting the data, I performed several necessary cleaning and processing tasks to prepare the data for modeling. Below are the steps I followed to clean and transform the data:
 
-* Loaded the spacy English corpus and updated the stop words list to include /n and /t
+* Imputed the missing values from the respective columns with missing data. I used judegment based on the distribution, other attribute values, and the cardinality of columns to decide how to impute each columns' missing values.
 
-* With each review separated in a separate list, I lemmatized the text to keep only the root word and lowercased each word
+* Since the eletric cars did not have any engine cylinders and were the rows where engine cylinder count were missing, I imputed these rows with 0.0 since those cars don't have engine cylinders.
 
-* Then, I only kept words that were not punctuation and were either numeric or alphabetic characters of text
+* I then checked columns with links to other attributes that had very high cardinality and dropped them from the analysis.
 
-* Lastly, in order to maintain the integrity of the reviews, I dropped reviews that were less than 15 characters long to maintain reviews conducive to NLP algorithms. I also removed reviews more than 512 characters long for the PyTorch model to operate on the reviews correctly
+* With columns that had strong cardinality but common terms, I contorted these features into new categorical attributes with more broad values. These were new columns for Engine Description and Transmission. 
+
+* Using the facets attriubte, I attempted to find common but not universal aspects of cars I thought would drive a car's price given the years of the cars come between around 2008 to 2021. These attributes were Bluetooth and Rear View Camera. I made sure to create too many attributes using this strategy.
+
+* I converted boolean attributes such as power locks to binary integers 0 and 1.
+
+* Next, I label encoded the remaining categorical attributes, since some had moderate cardinality and creating dummy variables would have made model building cumbersome by engendering the curse of dimensionality.
+
+* Highly skewed attributes were log transformed.
+
+* I used PyCaret to detect outliers, which I ultimately elected to leave in the dataset as there were no clear patterns among them when inspecting the rows. Below is an image of the t-SNE graph from PyCaret's anomalt detection.
+
+![alt text](https://github.com/elayer/CarvanaCarsProject/blob/main/outlier_detections.png "LDA Topic Example")
 
 ## EDA
-Some noteable findings from performing exploratory data analysis can be seen below. I found from looking at the Bi-Grams of the words in the reviews corpus, a lot of them primarily vaunted the game, compared Elden Ring to similar games, or were geared at pointing out performance issues. Similar sentiments can be seen in uni and tri-grams as well (in EDA notebook). The Chi2 influential term analysis graph is the most interesting to me. 
+As one would expect, Year was generally positively correlated with price, while mileage was negatively correlated with price. Of course, some brands of cars were still more espensive than others even with more miles, meaning that brand/make is indeed an influencer of car price. 
 
-I found words that primarily distinguish between positive and negative reviews dealt with screen ultrawide support and performance issues such as crashes. The last picture looks at the LDA results chart, with one topic being comprised of positive comments about the game itself. The second topic comprises mainly of words related to the performance of the game and frame rate issues. The third topic composes primarily of reviews resenting the game's difficulty.
+Based on the data collected, most of the states with higher average car prices were in the Northeast of the United States. 
 
-![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/bigrams_picture_2.png "BiGrams Counts")
-![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/chi2_picture.png "Chi2 Influential Words")
-![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/lda_picture_4.png "LDA Topic Example")
+Interestingly enough, the number of imperfections only started to noticeably decrease the car price after 3 imperfections. This may imply you could still get a car priced as high as a car with nothing tarnished as long as there aren't too many of them.
 
-With the most relevant terms and reviews left over, I think we have found the most prevalent topics in the reviews corpus. Those three being positive elements of the game, resentful reviews aimed at the game's difficulty, and the performance issues the game has. Therefore, forcusing on the areas of improvement, the game could perhaps allow for adjustment of difficulty, as well as work on ameliorating the frame rate and other performance related problems.
+Cars with lower amounts of enginr cylinders had higher gas mileages, yet were priced lower than cars with lower gas milages and more engine cylinders. One could infer more fuel efficient cars are generally cheaper than ones that are not.
 
-## Model Building (Sentiment Classification)
-Before building any models, I transformed the text using Tfidf Vectorizer and Count Vectorizer in order to make the data trainable. 
+![alt text](https://github.com/elayer/CarvanaCarsProject/blob/main/carprice_bybrand.png "Price by Brand")
+![alt text](https://github.com/elayer/CarvanaCarsProject/blob/main/mileage_bybrand_price.png "Price by mileage for Brands")
+![alt text](https://github.com/elayer/CarvanaCarsProject/blob/main/geomap_prices.png "Average Price per State Map")
+![alt text](https://github.com/elayer/CarvanaCarsProject/blob/main/mpgcity_price_bycyl.png "MPG per Engine Cylinder Price")
 
-* I started model building with Naive Bayes. From here, confusion matrix results improved as I moved to using the SGD classifier, and then Logistic Regression. 
+The Toyota Prius was at the top of fuel effieincy within the data.
 
-* I then attempted to use PyTorch with the HuggingFace Transformer library (namely, using RoBERTa) to maximize sentiment classification results. Although RoBERTA with PyTorch performed better than Logistic Regression, Logistic Regression achieved good results as well albeit the recall for non-recommended reviews being low. 
+## Model Building
+Using the statsmodels OLS method, I was able to knock out some tasks simutaneously but checking p-values of variables and dropping variables that were multicollinear.
+
+* Following using the OLS method, I made models using Linear Regression, Kernel Ridge, and Elastic Net to juxtapose models with regularization methods. 
+
+* Following this, I utilized tree-based models such as Random Forest, LightGBM, and XGBoost Regression. 
 
 
 ## Model Performance (Sentiment Classification)
-The Naive Bayes, SGDClassifier, and Logistic Regression models resptively achieved improved results. I then built the PyTorch model with HuggingFace. Since training the entire model with PyTorch using just 4 Epochs and 5 folds for cross validation would have taken more than 4 days on my computer, I only used on epoch on one fold. After this, I gathered the results of the model based on only that much training.
+The statsmodels OLS and standard Linear Regression models achieved similar performance metrics. Applying polynomial features to Ridge regression with Kernel Ridge sharply improved model metrics (RMSE and R2). Following this, Random Forest also achieved strong performace, but LightGBM and XGBoost achieved the highest performance metrics of all the attempted models to no surprise. Below are the current best performance metrics per model attempted (on the test sets):
 
-<b>(The possible labels for classification here are 0 : Non-recommended and 1 : Recommended)</b>
+* Statsmodels OLS) R2: 76.30
 
-Below are the Macro F1 Scores of each model built:
+* Linear Regression) R2: 75.71, RMSE: 0.1564
 
-* Naive Bayes: 0.48
+* Kernel Ridge Regression) R2: 85.32, RMSE: 0.1216
 
-* SGD Classifier (SVM using Hinge Loss): 0.69
+* Elastic Net) R2: 71.68, RMSE: 0.1688
 
-* Logistic Regression: 0.81
+* Random Forest Regression) R2: 85.14, RMSE: 0.1223
 
-* RoBERTa with PyTorch: 0.87 (after only 1 epoch on 1 fold of data)
+* LightGBM Regression) R2: 92.19, RMSE: 0.0887
 
-With a more powerful machine, I think we can achieve a robust model knowing the granular differences between recommended and non-recommended reviews. Here is an example of some predictions made from the model using a few samples from another fold that model wasn't trained on:
+* XGBoost Regression) R2: 93.44, 0.0812
 
-![alt text](https://github.com/elayer/Steam-Elden-Ring-Reviews-Project/blob/main/1foldpreds.png "Example PyTorch Predictions")
+I attempted to use Optuna to optimize the hyperparameters of Kernel Ridge and XGBoost. However, I didn't obtained any better models than the ones with hyperparameter sets I established manually. Attempts to use GridSearchCV did not converge.
 
 ## Future Improvements
-I came back to remove remove words from the N-gram analysis to locate more genuine phrase occurences. I was able to dig up more relevant review content to the game this way.
+I could create a FlaskAPI to productionize this project to allow users to make car price predictions based on the features included in the model. I also wonder if there is an efficient way to retain the model of vehicles without exploding the dimensionality of the data used in modeling.
 
-It's sometimes difficult to locate all of the insincere reviews, especially on Steam. However, I think this could lead to more elaborate and discrete topics potentially being found.
+I also could explore some stacking methods for modeling, or even creating a neural network to maximize performance of car price prediction while still being able to poentially include some high cardinality variables.
