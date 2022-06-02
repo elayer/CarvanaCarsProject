@@ -127,4 +127,4 @@ I attempted to use Optuna to optimize the hyperparameters of Kernel Ridge and XG
 ## Future Improvements
 I could create a FlaskAPI to productionize this project to allow users to make car price predictions based on the features included in the model. I also wonder if there is an efficient way to retain the model of vehicles without exploding the dimensionality of the data used in modeling.
 
-I also could explore some stacking methods for modeling, or even create a neural network to maximize performance of car price prediction while still being able to potentially include some high cardinality attributes.
+I also could explore some stacking methods for modeling, or even create a neural network to maximize performance of car price prediction while still being able to potentially include some high cardinality attributes such as car model.
