@@ -126,6 +126,13 @@ The statsmodels OLS and standard Linear Regression models achieved similar perfo
 
 I attempted to use Optuna to optimize the hyperparameters of Kernel Ridge and XGBoost. However, I didn't obtained any better models than the ones with hyperparameter sets I established manually. Attempts to use GridSearchCV did not converge.
 
+## Flask API/Productionization
+This project now has a functional Flask API built to predict user desired car information and specs. Below are a few pictures of an example price prediction using the framework.
+
+![alt text](https://github.com/elayer/CarvanaCarsProject/blob/main/car_homepage.png "Flask Homepage")
+![alt text](https://github.com/elayer/CarvanaCarsProject/blob/main/car_pred.png "Flask Prediction")
+
+
 ## Future Improvements
 With this project now having a functional FlaskAPI, I could experiment using different models in production. It currently uses the best Kernel Ridge model. While it may not have the same peak performance as the XGBoost regressor model, we know there will sometimes be a trade-off between performance and interpretability.
 
