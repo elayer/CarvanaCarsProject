@@ -6,6 +6,8 @@
 
 * Within Model Building, I began by dropping insignificant attributes as well as variables exhibiting multicollinearity. After using the OLS method from statsmodels, I moved into applying linear regression techniques such as standard Linear Regression, Elastic Net, and Kernel Ridge. I followed this up by applying more powerful models such as Random Forest, LightGBM, and XGBoost regression.
 
+* Built a Flask API framework to enable potential users to make price estimates based on their desired input values.
+
 
 ## Code and Resources Used:
 
@@ -125,6 +127,6 @@ The statsmodels OLS and standard Linear Regression models achieved similar perfo
 I attempted to use Optuna to optimize the hyperparameters of Kernel Ridge and XGBoost. However, I didn't obtained any better models than the ones with hyperparameter sets I established manually. Attempts to use GridSearchCV did not converge.
 
 ## Future Improvements
-I could create a FlaskAPI to productionize this project to allow users to make car price predictions based on the features included in the model. I also wonder if there is an efficient way to retain the model of vehicles without exploding the dimensionality of the data used in modeling.
+With this project now having a functional FlaskAPI, I could experiment using different models in production. It currently uses the best Kernel Ridge model. While it may not have the same peak performance as the XGBoost regressor model, we know there will sometimes be a trade-off between performance and interpretability.
 
 I also could explore some stacking methods for modeling, or even create a neural network to maximize performance of car price prediction while still being able to potentially include some high cardinality attributes such as car model.
