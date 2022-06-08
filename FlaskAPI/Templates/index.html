@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="nofollow" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+
+<style type="text/css">
+    .lbl {
+        text-align: right;
+        width: 100px;
+        white-space: nowrap;
+    }
+
+    .fld {
+        width: 100%;
+    }
+
+    .frm {
+        display: inline-block;
+    }
+
+</style>
+
+</head>
+ 
+<div style="background-image: url('https://wallpaperaccess.com/full/13671.jpg'); background-repeat: no-repeat; background-size: cover; height: 1080px;">
+  
+ <div class="big" align="center">
+ <h1 style="background-color: transparent;">Carvana Used Car Price Estimator</h1>
+ <h4 style="background-color: transparent;">Enter your car information in the spaces provided. Then, click 'submit' to receive an estimated car price</h4>
+ <br>
+ <br>
+ 
+  <form action="/result" method="POST">
+  
+    <legend>Car Information</legend>
+  
+  
+    <div class="frm">
+    <table>
+    <tr>
+    <td class="lbl"><label for="make">Make</label></td>
+      <td><select id="make" name="make">
+      <option value="0">Acura</option>
+      <option value="1">Alfa Romeo</option>
+      <option value="2">Audi</option>
+      <option value="3">BMW</option>
+      <option value="4">Buick</option>
+      <option value="5">Cadillac</option>
+      <option value="6">Chevrolet</option>
+      <option value="7">Chrysler</option>
+      <option value="8">Dodge</option>
+      <option value="9">FIAT</option>
+      <option value="10">Ford</option>
+      <option value="11">GMC</option>
+      <option value="12">Genesis</option>
+      <option value="13">Honda</option>
+      <option value="14">Hyundai</option>
+      <option value="15">INFINITI</option>
+      <option value="16">Jaguar</option>
+      <option value="17">Jeep</option>
+      <option value="18">Kia</option>
+      <option value="19">Land Rover</option>
+      <option value="20">Lexus</option>
+      <option value="21">Lincoln</option>
+      <option value="22">MINI</option>
+      <option value="23">Maserati</option>
+      <option value="24">Mazda</option>
+      <option value="25">Mercedes-Benz</option>
+      <option value="26">Mitsubishi</option>
+      <option value="27">Nissan</option>
+      <option value="28">Polestar</option>
+      <option value="29">Porsche</option>
+      <option value="30">Ram</option>
+      <option value="31">Scion</option>
+      <option value="32">Subaru</option>
+      <option value="33">Tesla</option>
+      <option value="34">Toyota</option>
+      <option value="35">Volkswagen</option>
+      <option value="36">Volvo</option>
+      <option value="37">smart</option>
+
+    </select></td>
+    </tr>
+    <tr>
+    <td class="lbl"><label for="year">Year</label></td>
+      <td><input type="text" id="year" name="year" value="2015"> Between [2009-2022]</td>
+    </tr>
+    <tr>
+    <td class="lbl"><label for="mileage">Mileage</label></td>
+      <td><input type="text" id="mileage" name="mileage" value="50000"> Between [0-115000]</td>
+    </tr>
+    <tr>
+    <td class="lbl"><label for="state">State</label></td>
+      <td><select id="state" name="state">
+      <option value="0">AL</option>
+      <option value="1">AR</option>
+      <option value="2">AZ</option>
+      <option value="3">CA</option>
+      <option value="4">CT</option>
+      <option value="5">FL</option>
+      <option value="6">GA</option>
+      <option value="7">IL</option>
+      <option value="8">IN</option>
+      <option value="9">MA</option>
+      <option value="10">MD</option>
+      <option value="11">MI</option>
+      <option value="12">MN</option>
+      <option value="13">NC</option>
+      <option value="14">NJ</option>
+      <option value="15">NV</option>
+      <option value="16">NY</option>
+      <option value="17">OH</option>
+      <option value="18">OK</option>
+      <option value="19">PA</option>
+      <option value="20">TN</option>
+      <option value="21">TX</option>
+      <option value="22">UT</option>
+      <option value="23">VA</option>
+      <option value="24">WI</option>
+
+    </select></td>
+    </tr>
+    <tr>  
+    <td class="lbl"><label for="mpg">MPG (Highway)</label></td>
+      <td><input type="text" id="mpg" name="mpg" value="25.0"> Between [15.0-50.0]</td>
+    </tr>
+    <tr>
+    <td class="lbl"><label for="cyl">Engine Cylinder Count</label></td>
+      <td><select id="cyl" name="cyl">
+      <option value="0">0</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="8">8</option>  
+
+    </select></td>
+    </tr>
+    <tr>
+    <td class="lbl"><label for="train">Drive Train</label></td>
+      <td><select id="train" name="train">
+      <option value="0">2WD</option>
+      <option value="1">4MATIC AWD</option>
+      <option value="2">4WD</option>
+      <option value="3">AWD</option>
+      <option value="4">FWD</option>
+      <option value="5">Quattro AWD</option>
+      <option value="6">RWD</option>
+
+    </select></td>
+    </tr>
+    <tr>
+    <td class="lbl"><label for="exterior">Exterior Color</label></td>
+      <td><select id="exterior" name="exterior">
+      <option value="0">Beige</option>
+      <option value="1">Black</option>
+      <option value="2">Blue</option>
+      <option value="3">Brown</option>
+      <option value="4">Burgundy</option>
+      <option value="5">Gold</option>
+      <option value="6">Gray</option>
+      <option value="7">Green</option>
+      <option value="8">Orange</option>
+      <option value="9">Other</option>
+      <option value="10">Purple</option>
+      <option value="11">Red</option>
+      <option value="12">Silver</option>
+      <option value="13">Tan</option>
+      <option value="14">White</option>
+      <option value="15">Yellow</option>
+
+    </select></td>
+    </tr>
+    <tr>
+    <td class="lbl"><label for="keys">Number of Keys</label></td>
+      <td><select id="keys" name="keys">
+      <option value="1.0">1</option>
+      <option value="2.0">2</option>
+      <option value="3.0">3</option>
+      <option value="4.0">4</option>
+
+    </select></td>
+    </tr>
+    
+    <tr>
+    <td class="lbl"><label for="doors">Number of Doors</label></td>
+      <td><select id="doors" name="doors">
+      <option value="2.0">2</option>
+      <option value="3.0">3</option>
+      <option value="4.0">4</option>
+      <option value="5.0">5</option>
+
+    </select></td>
+    </tr>
+    
+    </table>
+    </div>
+    
+    <div class="frm">
+    <table>
+    
+    <tr>
+    <td class="lbl"><label for="seating">Seating</label></td>
+      <td><select id="seating" name="seating">
+      <option value="2.0">2</option>
+      <option value="3.0">3</option>
+      <option value="4.0">4</option>
+      <option value="5.0">5</option>
+      <option value="6.0">6</option>
+      <option value="7.0">7</option>
+      <option value="8.0">8</option>
+
+    </select></td>
+    </tr>
+    <tr>
+    <td class="lbl"><label for="ac">AC</label></td>
+    <td><select id="ac" name="ac">
+      <option value="0">No AC</option>
+      <option value="1">AC</option>
+    </select></td>
+    </tr>
+    
+    <tr>
+    <td class="lbl"><label for="window">Powered Windows</label></td>
+    <td><select id="window" name="window">
+      <option value="0">No Powered Windows</option>
+      <option value="1">Powered Windows</option>
+    </select></td>
+    </tr>
+    
+    
+    
+    <tr>
+    <td class="lbl"><label for="cd">CD Player</label></td>
+    <td><select id="cd" name="cd">
+      <option value="0">No CD Player</option>
+      <option value="1">CD Player</option>
+    </select></td>
+    </tr>
+    
+    <tr>
+    <td class="lbl"><label for="wheel">Tilted Wheel</label></td>
+    <td><select id="wheel" name="wheel">
+      <option value="0">No Tilted Wheel</option>
+      <option value="1">Tilted Wheel</option>
+    </select></td>
+    </tr>
+    
+    <tr>
+    <td class="lbl"><label for="pseat">Powered Seats</label></td>
+    <td><select id="pseat" name="pseat">
+      <option value="0">No Powered Seats</option>
+      <option value="1">Powered Seats</option>
+    </select></td>
+    </tr>
+    
+    <tr>
+    <td class="lbl"><label for="transmission">Transmission</label></td>
+      <td><select id="transmission" name="transmission">
+      <option value="0">Auto</option>
+      <option value="1">AutoCVT</option>
+      <option value="2">CVT</option>
+      <option value="3">Manual</option>
+      <option value="4">Single-Speed</option>
+
+    </select></td>
+    </tr>
+    <tr>
+    <td class="lbl"><label for="bluetooth">Bluetooth</label></td>
+    <td><select id="bluetooth" name="bluetooth">
+      <option value="0">No Bluetooth</option>
+      <option value="1">Bluetooth</option>
+    </select></td>
+    </tr>
+    
+    <tr>
+    <td class="lbl"><label for="camera">Rear View Camera</label></td>
+    <td><select id="camera" name="camera">
+      <option value="0">No Rear View Camera</option>
+      <option value="1">Rear View Camera</option>
+    </select></td>
+    </tr>
+    
+    </table>
+    </div>
+    
+    <br>
+    <br>
+  
+    <input type="submit" value="Submit" class="p-2 mb-3 bg-primary text-white">
+  </form>
+ </div>
+</div>
+</body>
+</html>
